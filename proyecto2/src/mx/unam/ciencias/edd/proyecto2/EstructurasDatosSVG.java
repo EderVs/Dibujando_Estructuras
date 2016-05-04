@@ -22,7 +22,7 @@ public class EstructurasDatosSVG {
 	}
 
 	public String lista (Lista<Integer> l) {
-		String svg = xml, lista = "";
+		String lista = "";
 		int padding = 15, border = 25;
 		int i = border, largoSVG = border;
 
@@ -36,11 +36,11 @@ public class EstructurasDatosSVG {
 		}
 		largoSVG += i;
 
-		return svg + "<svg width='"+ largoSVG +"' height='100'>" + lista + "</svg>";
+		return xml + "<svg width='"+ largoSVG +"' height='100'>" + lista + "</svg>";
 	}
 
 	public String cola (Cola<Integer> c) {
-		String svg = xml, cola = "";
+		String cola = "";
 		int padding = 15, border = 25;
 		int i = border, largoSVG = border, e;
 
@@ -55,33 +55,11 @@ public class EstructurasDatosSVG {
 		}
 		largoSVG += i;
 
-		return svg + "<svg width='"+ largoSVG +"' height='100'>" + cola + "</svg>";
+		return xml + "<svg width='"+ largoSVG +"' height='100'>" + cola + "</svg>";
 	}
 
-	/*
 	public String pilas (Pila<Integer> p) {
-		String svg = xml, pila = "";
-		int padding = 15, top = 5, border = 25;
-		int i = top+border, largoSVG = border, alturaSVG, e;
-		int mayor = p.mira();
-
-		while (!p.esVacia()) {
-			e = p.saca();
-			pila += utils.rectanguloConNumero(e, border, i, padding, border);
-			if (mayor < e) {
-				mayor = e;
-			}
-			i += border;
-		}
-		largoSVG += this.longitudNumero(mayor)*10+padding*2+border;
-		alturaSVG = i + border;
-
-		return svg + "<svg width='"+ largoSVG +"' height='"+ alturaSVG +"'>" + pila + "</svg>";
-	}
-	*/
-
-	public String pilas (Pila<Integer> p) {
-		String svg = xml, pila = "";
+		String pila = "";
 		int padding = 15, border = 25;
 		int i = border, largoSVG = border, e;
 
@@ -96,6 +74,12 @@ public class EstructurasDatosSVG {
 		}
 		largoSVG += i;
 
-		return svg + "<svg width='"+ largoSVG +"' height='100'>" + pila + "</svg>";
+		return xml + "<svg width='"+ largoSVG +"' height='100'>" + pila + "</svg>";
+	}
+
+	public String arbolBinario (ArbolBinario<Integer> ab) {
+		int padding = 15;
+		String arbol = utils.circuloConNumero(ab.raiz().get(), 500, 500, padding, ab.raiz().get(), "white");
+		return xml + "<svg width='1000' height='1000'>" + arbol + "</svg>";
 	}
 }

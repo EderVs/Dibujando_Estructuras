@@ -17,13 +17,21 @@ public class SVGUtils {
 		return "<text x='"+ x +"' y='"+ y +"' font-size='20' "+ extra +">"+ texto +"</text>";
 	}
 
-	public String numero (int n, double x, double y) {
-		return "<text x='"+ x +"' y='"+ y +"' font-size='20'>"+ n +"</text>";
+	public String numero (int n, double x, double y, String extra) {
+		return "<text x='"+ x +"' y='"+ y +"' font-size='20' "+ extra +">"+ n +"</text>";
 	}
 
 	/* Figuras */
 	public String rectangulo (double base, double altura, double x, double y) {
 		return "<rect x='"+ x +"' y='"+ y +"' width='"+ base +"' height='"+ altura +"' stroke='black' stroke-width='1' fill='white'/>";
+	}
+
+	public String circulo (double radio, double x, double y, String color) {
+		String color_s = "";
+		if (!color.equals("")) {
+			color_s="fill='"+ color +"'";
+		}
+		return "<circle cx='"+ x +"' cy='"+ y +"' r='"+ radio +"' "+ color_s +" stroke='black' stroke-width='1'/>";
 	}
 
 	/* Figuras con Textos */
@@ -32,7 +40,12 @@ public class SVGUtils {
 	}
 
 	public String rectanguloConNumero (int n, double x, double y, int padding, int altura) {
-		return this.rectangulo(this.longitudNumero(n)*10+padding*2, altura, x, y) + this.numero(n, x+padding, y+20);
+		return this.rectangulo(this.longitudNumero(n)*10+padding*2, altura, x, y) + this.numero(n, x+padding, y+20,"");
+	}
+
+	public String circuloConNumero (int n, double x, double y, int padding, int max, String color) {
+		int radio = (this.longitudNumero(max)*10+padding*2)/2;
+		return this.circulo(radio, x, y, color) + this.numero(n, x, y+5, "text-anchor='middle'");
 	}
 
 	/* Flechas */

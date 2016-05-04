@@ -34,10 +34,13 @@ public class Proyecto2 {
 		String estructura = "", elementos = "";
 		Lista<String> estructuras_permitidas = new Lista<String>();
 		EstructurasDatosSVG edSVG = new EstructurasDatosSVG();
+		Lista<Integer> lista;
+
 		estructuras_permitidas.agrega("Lista");
 		estructuras_permitidas.agrega("Pila");
 		estructuras_permitidas.agrega("Cola");
 		estructuras_permitidas.agrega("ArbolBinario");
+		estructuras_permitidas.agrega("ArbolBinarioCompleto");
 		estructuras_permitidas.agrega("ArbolRojinegro");
 		estructuras_permitidas.agrega("ArbolAVL");
 		estructuras_permitidas.agrega("Grafica");
@@ -70,8 +73,8 @@ public class Proyecto2 {
 
 		switch (estructura) {
 			case "Lista":
-				Lista<Integer> lista = new Lista<Integer>();
-				lista = obtenerElementosLista(lista, elementos);
+				System.out.println("Hola");
+				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
 				System.out.println(edSVG.lista(lista));
 				break;
 			case "Cola":
@@ -83,6 +86,11 @@ public class Proyecto2 {
 				Pila<Integer> pila = new Pila<Integer>();
 				pila = obtenerElementosPila(pila, elementos);
 				System.out.println(edSVG.pilas(pila));
+				break;
+			case "ArbolBinario":
+				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
+				ArbolBinarioOrdenado<Integer> arbol = new ArbolBinarioOrdenado<Integer>(lista);
+				System.out.println(edSVG.arbolBinario(arbol));
 				break;
 		}	
 	}
