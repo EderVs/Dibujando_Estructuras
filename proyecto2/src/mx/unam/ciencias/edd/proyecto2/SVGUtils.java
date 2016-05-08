@@ -34,6 +34,10 @@ public class SVGUtils {
 		return "<circle cx='"+ x +"' cy='"+ y +"' r='"+ radio +"' "+ color_s +" stroke='black' stroke-width='1'/>";
 	}
 
+	public String linea (double x1, double y1, double x2, double y2) {
+		return "<line x1='"+ x1 +"' y1='"+ y1 +"' x2='"+ x2 +"' y2='"+ y2 +"' stroke='black' stroke-width='2'/>";
+	}
+
 	/* Figuras con Textos */
 	public String rectanguloConTexto (String texto, double x, double y) {
 		return this.rectangulo(texto.length()*10+10, 25, x, y) + this.texto(texto, x+5, y+20, "");
@@ -43,9 +47,8 @@ public class SVGUtils {
 		return this.rectangulo(this.longitudNumero(n)*10+padding*2, altura, x, y) + this.numero(n, x+padding, y+20,"");
 	}
 
-	public String circuloConNumero (int n, double x, double y, int padding, int max, String color) {
-		int radio = (this.longitudNumero(max)*10+padding*2)/2;
-		return this.circulo(radio, x, y, color) + this.numero(n, x, y+5, "text-anchor='middle'");
+	public String circuloConNumero (int n, double x, double y, int padding, int radio, String color, String colorLetra) {
+		return this.circulo(radio, x, y, color) + this.numero(n, x, y+5, "text-anchor='middle' fill='"+ colorLetra +"'");
 	}
 
 	/* Flechas */

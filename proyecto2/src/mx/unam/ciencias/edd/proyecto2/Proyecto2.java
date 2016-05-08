@@ -29,6 +29,13 @@ public class Proyecto2 {
 		return p;
 	}
 
+	public static ArbolRojinegro<Integer> obtenerElementosArbolRN (ArbolRojinegro<Integer> ab, String elementos) {
+		for (String i: elementos.split(", ")) {
+			ab.agrega(Integer.parseInt(i));
+		}
+		return ab;
+	}
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String estructura = "", elementos = "";
@@ -73,7 +80,6 @@ public class Proyecto2 {
 
 		switch (estructura) {
 			case "Lista":
-				System.out.println("Hola");
 				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
 				System.out.println(edSVG.lista(lista));
 				break;
@@ -89,8 +95,18 @@ public class Proyecto2 {
 				break;
 			case "ArbolBinario":
 				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
-				ArbolBinarioOrdenado<Integer> arbol = new ArbolBinarioOrdenado<Integer>(lista);
-				System.out.println(edSVG.arbolBinario(arbol));
+				ArbolBinarioOrdenado<Integer> arbolO = new ArbolBinarioOrdenado<Integer>(lista);
+				System.out.println(edSVG.arbolBinario(arbolO));
+				break;
+			case "ArbolBinarioCompleto":
+				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
+				ArbolBinarioCompleto<Integer> arbolC = new ArbolBinarioCompleto<Integer>(lista);
+				System.out.println(edSVG.arbolBinario(arbolC));
+				break;
+			case "ArbolRojinegro":
+				ArbolRojinegro<Integer> arbolRN = new ArbolRojinegro<Integer>();
+				arbolRN = obtenerElementosArbolRN(arbolRN, elementos);
+				System.out.println(edSVG.arbolBinario(arbolRN));
 				break;
 		}	
 	}
