@@ -112,50 +112,12 @@ public class EstructurasDatosSVG {
 		return this.arbolBinario(abc, "");
 	}
 
-	public String grafica () {
+	public String grafica (Grafica<Integer> g) {
 		String grafica;
 		int padding = 15, radio;
 		int perimetro, max;
 		double radioG;
 		double largoSVG, altoSVG;
-
-		Grafica<Integer> g = new Grafica<Integer>();
-		g.agrega(1000000);
-		g.agrega(2);
-		g.agrega(3);
-		g.agrega(4);
-		g.agrega(5);
-		g.agrega(6);
-		g.agrega(7);
-		g.agrega(8);
-		g.conecta(1000000,2);
-		g.conecta(1000000,3);
-		g.conecta(1000000,4);
-		g.conecta(1000000,5);
-		g.conecta(1000000,6);
-		g.conecta(1000000,7);
-		g.conecta(1000000,8);
-		g.conecta(2,3);
-		g.conecta(2,4);
-		g.conecta(2,5);
-		g.conecta(2,6);
-		g.conecta(2,7);
-		g.conecta(2,8);
-		g.conecta(3,4);
-		g.conecta(3,5);
-		g.conecta(3,6);
-		g.conecta(3,7);
-		g.conecta(3,8);
-		g.conecta(4,5);
-		g.conecta(4,6);
-		g.conecta(4,7);
-		g.conecta(4,8);
-		g.conecta(5,6);
-		g.conecta(5,7);
-		g.conecta(5,8);
-		g.conecta(6,7);
-		g.conecta(6,8);
-		g.conecta(7,8);
 
 		max = this.obtenerMaximo(g);
 

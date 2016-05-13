@@ -51,9 +51,19 @@ public class Proyecto2 {
 		return li;
 	}
 
+	public static Grafica<Integer> obtenerElementosGrafica(Grafica<Integer> g, String elementos, String relaciones) {
+		for (String i: elementos.split(", ")) {
+			g.agrega(Integer.parseInt(i));
+		}
+		for (String i: relaciones.split(";")) {
+			g.conecta(Integer.parseInt(i.split(",")[0]), Integer.parseInt(i.split(",")[1]));
+		}
+		return g;
+	}
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String estructura = "", elementos = "";
+		String estructura = "", elementos = "", relaciones = "";
 		Lista<String> estructuras_permitidas = new Lista<String>();
 		EstructurasDatosSVG edSVG = new EstructurasDatosSVG();
 		Lista<Integer> lista;
@@ -135,7 +145,14 @@ public class Proyecto2 {
 				System.out.println(edSVG.monticulo(monticulo));
 				break;
 			case "Grafica":
-				System.out.println(edSVG.grafica());
+				try {
+			        relaciones = br.readLine();
+				} catch (IOException e) {
+					System.out.println("Error al introducir los relaciones.");
+					return;
+				}
+				Grafica<Integer> g = obtenerElementosGrafica(new Grafica<Integer>(), elementos, relaciones);
+				System.out.println(edSVG.grafica(g));
 				break;
 		}	
 	}
