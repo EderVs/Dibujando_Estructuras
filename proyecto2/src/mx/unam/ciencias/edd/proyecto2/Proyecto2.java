@@ -52,11 +52,13 @@ public class Proyecto2 {
 	}
 
 	public static Grafica<Integer> obtenerElementosGrafica(Grafica<Integer> g, String elementos, String relaciones) {
+		String[] arista;
 		for (String i: elementos.split(", ")) {
 			g.agrega(Integer.parseInt(i));
 		}
 		for (String i: relaciones.split(";")) {
-			g.conecta(Integer.parseInt(i.split(",")[0]), Integer.parseInt(i.split(",")[1]));
+			arista = i.split(",");
+			g.conecta(Integer.parseInt(arista[0]), Integer.parseInt(arista[1]));
 		}
 		return g;
 	}
