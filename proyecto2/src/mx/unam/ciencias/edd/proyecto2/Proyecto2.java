@@ -66,19 +66,9 @@ public class Proyecto2 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String estructura = "", elementos = "", relaciones = "";
-		Lista<String> estructuras_permitidas = new Lista<String>();
+		EstructurasDeDatos estructuraE = null;
 		EstructurasDatosSVG edSVG = new EstructurasDatosSVG();
 		Lista<Integer> lista;
-
-		estructuras_permitidas.agrega("Lista");
-		estructuras_permitidas.agrega("Pila");
-		estructuras_permitidas.agrega("Cola");
-		estructuras_permitidas.agrega("ArbolBinario");
-		estructuras_permitidas.agrega("ArbolBinarioCompleto");
-		estructuras_permitidas.agrega("ArbolRojinegro");
-		estructuras_permitidas.agrega("ArbolAVL");
-		estructuras_permitidas.agrega("Monticulo");
-		estructuras_permitidas.agrega("Grafica");
 
 		// Leyendo la estructura que queremos recibir.
 		try {
@@ -92,10 +82,11 @@ public class Proyecto2 {
 			System.out.println("Error de sintaxis");
 			return;
 		}
-		estructura = estructura.substring(2);
-		if (!estructuras_permitidas.contiene(estructura)) {
-			System.out.println("Estructura erronea.");
-			return;
+		estructura = estructura.replace("#", "").replace(" ", "");
+		try {
+			estructuraE =  EstructurasDeDatos.valueOf(estructura);
+		} catch (IllegalArgumentException e) {
+			System.out.println("Estructura erronea");
 		}
 		
 		// Leyendo elementos.
@@ -106,47 +97,47 @@ public class Proyecto2 {
 			return;
 		}
 
-		switch (estructura) {
-			case "Lista":
+		switch (estructuraE) {
+			case Lista:
 				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
 				System.out.println(edSVG.lista(lista));
 				break;
-			case "Cola":
+			case Cola:
 				Cola<Integer> cola = new Cola<Integer>();
 				cola = obtenerElementosCola(cola, elementos);
 				System.out.println(edSVG.meteSaca(cola));
 				break;
-			case "Pila":
+			case Pila:
 				Pila<Integer> pila = new Pila<Integer>();
 				pila = obtenerElementosPila(pila, elementos);
 				System.out.println(edSVG.meteSaca(pila));
 				break;
-			case "ArbolBinario":
+			case ArbolBinario:
 				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
 				ArbolBinarioOrdenado<Integer> arbolO = new ArbolBinarioOrdenado<Integer>(lista);
-				System.out.println(edSVG.arbolBinario(arbolO, ""));
+				System.out.println(edSVG.arbolBinario(arbolO, estructuraE));
 				break;
-			case "ArbolBinarioCompleto":
+			case ArbolBinarioCompleto:
 				lista = obtenerElementosLista(new Lista<Integer>(), elementos);
 				ArbolBinarioCompleto<Integer> arbolC = new ArbolBinarioCompleto<Integer>(lista);
-				System.out.println(edSVG.arbolBinario(arbolC, ""));
+				System.out.println(edSVG.arbolBinario(arbolC, estructuraE));
 				break;
-			case "ArbolRojinegro":
+			case ArbolRojinegro:
 				ArbolRojinegro<Integer> arbolRN = new ArbolRojinegro<Integer>();
 				arbolRN = obtenerElementosArbolRN(arbolRN, elementos);
-				System.out.println(edSVG.arbolBinario(arbolRN, ""));
+				System.out.println(edSVG.arbolBinario(arbolRN, estructuraE));
 				break;
-			case "ArbolAVL":
+			case ArbolAVL:
 				ArbolAVL<Integer> arbolAVL = new ArbolAVL<Integer>();
 				arbolAVL = obtenerElementosArbolAVL(arbolAVL, elementos);
-				System.out.println(edSVG.arbolBinario(arbolAVL, "AVL"));
+				System.out.println(edSVG.arbolBinario(arbolAVL, estructuraE));
 				break;
-			case "Monticulo":
+			case Monticulo:
 				Lista<Indexable<Integer>> li = obtenerElementosListaIndexable(new Lista<Indexable<Integer>>(), elementos);
 				MonticuloMinimo<Indexable<Integer>> monticulo = new MonticuloMinimo<Indexable<Integer>>(li);
 				System.out.println(edSVG.monticulo(monticulo));
 				break;
-			case "Grafica":
+			case Grafica:
 				try {
 			        relaciones = br.readLine();
 				} catch (IOException e) {

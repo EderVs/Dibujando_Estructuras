@@ -80,7 +80,7 @@ public class EstructurasDatosSVG {
 		return xml + "<svg width='"+ largoSVG +"' height='100'>" + mss + "</svg>";
 	}
 
-	public String arbolBinario (ArbolBinario<Integer> ab, String arbol_a) {
+	public String arbolBinario (ArbolBinario<Integer> ab, EstructurasDeDatos arbol_a) {
 		int padding = 15, largoSVG, altoSVG, radio;
 		int iniX, iniY;
 		String arbol;
@@ -109,7 +109,7 @@ public class EstructurasDatosSVG {
 		for (Indexable<Integer> i:mm) {
 			abc.agrega(i.getElemento());
 		}
-		return this.arbolBinario(abc, "");
+		return this.arbolBinario(abc, EstructurasDeDatos.ArbolBinarioCompleto);
 	}
 
 	public String grafica (Grafica<Integer> g) {
@@ -195,7 +195,7 @@ public class EstructurasDatosSVG {
 	}
 
 
-	private String obtenerVertices (VerticeArbolBinario<Integer> vertice, int radio, int i, int x, int y, String arbol_a) {
+	private String obtenerVertices (VerticeArbolBinario<Integer> vertice, int radio, int i, int x, int y, EstructurasDeDatos arbol_a) {
 		String arbol = "", color = "white", colorLetra = "black";
 		i /= 2;
 		// Recusivamente obteniendo los sub-arboles izquierdo y derecho.
@@ -219,7 +219,7 @@ public class EstructurasDatosSVG {
 		}
 
 		arbol += utils.circuloConNumero(vertice.get(), x, y, radio, color, colorLetra);
-		if (arbol_a.equals("AVL")) {
+		if (arbol_a == EstructurasDeDatos.ArbolAVL) {
 			arbol += utils.texto(vertice.toString().split(" ")[1], x+radio, y-(radio/2), "text-anchor='middle'");
 		}
 		return arbol;
