@@ -47,7 +47,7 @@ public class SVGUtils {
 		return this.rectangulo(this.longitudNumero(n)*10+padding*2, altura, x, y) + this.numero(n, x+padding, y+20,"");
 	}
 
-	public String circuloConNumero (int n, double x, double y, int padding, int radio, String color, String colorLetra) {
+	public String circuloConNumero (int n, double x, double y, int radio, String color, String colorLetra) {
 		return this.circulo(radio, x, y, color) + this.numero(n, x, y+5, "text-anchor='middle' fill='"+ colorLetra +"'");
 	}
 

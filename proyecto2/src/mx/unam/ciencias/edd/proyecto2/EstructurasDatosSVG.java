@@ -12,6 +12,37 @@ public class EstructurasDatosSVG {
 		xml = "<?xml version='1.0' encoding='utf-8'?>";
 	}
 
+	// Auxiliar para Graficas.
+	private class VerticeCoordenada implements Comparable<VerticeCoordenada> {
+		
+		VerticeGrafica<Integer> vertice;
+		double x;
+		double y;
+
+		public VerticeCoordenada(VerticeGrafica<Integer> vertice, double x, double y) {
+			this.vertice = vertice;
+			this.x = x;
+			this.y = y;
+		}
+
+		@Override public int compareTo(VerticeCoordenada vc) {
+			return this.vertice.getElemento().compareTo(vc.vertice.getElemento());
+		}
+
+		public boolean equals(VerticeCoordenada vc) {
+			/*if (o == null)
+                return false;
+            if (getClass() != o.getClass())
+                return false;
+            @SuppressWarnings("unchecked") VerticeCoordenada vc = (VerticeCoordenada)o;*/
+            return vc.vertice.getElemento().equals(this.vertice.getElemento());
+        }
+
+        @Override public String toString() {
+        	return this.vertice.getElemento().toString();
+        }
+	}
+
 	public String lista (Lista<Integer> l) {
 		String lista = "";
 		int padding = 15, border = 25;
@@ -30,45 +61,26 @@ public class EstructurasDatosSVG {
 		return xml + "<svg width='"+ largoSVG +"' height='100'>" + lista + "</svg>";
 	}
 
-	public String cola (Cola<Integer> c) {
-		String cola = "";
+	public String meteSaca (MeteSaca<Integer> ms) {
+		String mss = "";
 		int padding = 15, border = 25;
 		int i = border, largoSVG = border, e;
 
-		while (!c.esVacia()) {
-			e = c.saca();
-			cola += utils.rectanguloConNumero(e, i, 40, padding, border);
+		while (!ms.esVacia()) {
+			e = ms.saca();
+			mss += utils.rectanguloConNumero(e, i, 40, padding, border);
 			i += this.longitudNumero(e)*10+padding*2;
-			if (!c.esVacia()) {
-				cola += utils.flechaDerecha(i+2, 58);
+			if (!ms.esVacia()) {
+				mss += utils.flechaDerecha(i+2, 58);
 			}
 			i += border;
 		}
 		largoSVG += i;
 
-		return xml + "<svg width='"+ largoSVG +"' height='100'>" + cola + "</svg>";
+		return xml + "<svg width='"+ largoSVG +"' height='100'>" + mss + "</svg>";
 	}
 
-	public String pilas (Pila<Integer> p) {
-		String pila = "";
-		int padding = 15, border = 25;
-		int i = border, largoSVG = border, e;
-
-		while (!p.esVacia()) {
-			e = p.saca();
-			pila += utils.rectanguloConNumero(e, i, 40, padding, border);
-			i += this.longitudNumero(e)*10+padding*2;
-			if (!p.esVacia()) {
-				pila += utils.flechaDerecha(i+2, 58);
-			}
-			i += border;
-		}
-		largoSVG += i;
-
-		return xml + "<svg width='"+ largoSVG +"' height='100'>" + pila + "</svg>";
-	}
-
-	public String arbolBinario (ArbolBinario<Integer> ab) {
+	public String arbolBinario (ArbolBinario<Integer> ab, String arbol_a) {
 		int padding = 15, largoSVG, altoSVG, radio;
 		int iniX, iniY;
 		String arbol;
@@ -88,8 +100,73 @@ public class EstructurasDatosSVG {
 		iniX = largoSVG/2;
 		iniY = radio*3;
 
-		arbol = this.obtenerVertices(ab.raiz(), radio, padding, largoSVG/2, iniX, iniY);
+		arbol = this.obtenerVertices(ab.raiz(), radio, largoSVG/2, iniX, iniY, arbol_a);
 		return xml + "<svg width='"+ largoSVG +"' height='"+ altoSVG +"'>" + arbol + "</svg>";
+	}
+
+	public String monticulo (MonticuloMinimo<Indexable<Integer>> mm) {
+		ArbolBinarioCompleto<Integer> abc = new ArbolBinarioCompleto<Integer>();
+		for (Indexable<Integer> i:mm) {
+			abc.agrega(i.getElemento());
+		}
+		return this.arbolBinario(abc, "");
+	}
+
+	public String grafica () {
+		String grafica;
+		int padding = 15, radio;
+		int perimetro, max;
+		double radioG;
+		double largoSVG, altoSVG;
+
+		Grafica<Integer> g = new Grafica<Integer>();
+		g.agrega(1000000);
+		g.agrega(2);
+		g.agrega(3);
+		g.agrega(4);
+		g.agrega(5);
+		g.agrega(6);
+		g.agrega(7);
+		g.agrega(8);
+		g.conecta(1000000,2);
+		g.conecta(1000000,3);
+		g.conecta(1000000,4);
+		g.conecta(1000000,5);
+		g.conecta(1000000,6);
+		g.conecta(1000000,7);
+		g.conecta(1000000,8);
+		g.conecta(2,3);
+		g.conecta(2,4);
+		g.conecta(2,5);
+		g.conecta(2,6);
+		g.conecta(2,7);
+		g.conecta(2,8);
+		g.conecta(3,4);
+		g.conecta(3,5);
+		g.conecta(3,6);
+		g.conecta(3,7);
+		g.conecta(3,8);
+		g.conecta(4,5);
+		g.conecta(4,6);
+		g.conecta(4,7);
+		g.conecta(4,8);
+		g.conecta(5,6);
+		g.conecta(5,7);
+		g.conecta(5,8);
+		g.conecta(6,7);
+		g.conecta(6,8);
+		g.conecta(7,8);
+
+		max = this.obtenerMaximo(g);
+
+		radio = (this.longitudNumero(max)*10+padding*2)/2;
+		perimetro = g.getElementos()*radio*3;
+		radioG = perimetro / 3.1416;
+
+		largoSVG = altoSVG = radioG*2 + radio*2.0*2.0;
+
+		grafica = this.obtenerVertices(g, radioG, radio, largoSVG/2, altoSVG/2);
+		return xml + "<svg width='"+ largoSVG +"' height='"+ altoSVG +"'>" + grafica + "</svg>";
 	}
 
 	private int longitudNumero (int n) {
@@ -130,26 +207,43 @@ public class EstructurasDatosSVG {
 		return ((vertice.get().compareTo(max.get())>=0)? vertice : max);
 	}
 
+	private int obtenerMaximo (Grafica<Integer> g) {
+		int max = 0;
+		for (int i:g) {
+			max = i;
+			break;
+		}
+		for (int i: g) {
+			if (max < i) {
+				max = i;
+			}
+		}
+		return max;
+	}
+
+
 	private int obtenerLongitudSVGArbol (ArbolBinario<Integer> ab, int radio) {
 		int numeroHojas = (int) Math.pow(2,ab.profundidad());
 		return (numeroHojas+(numeroHojas/2)+2)*(radio*2);
 	}
 
+
 	private int obtenerAlturaSVGArbol (ArbolBinario<Integer> ab, int radio) {
 		return (ab.profundidad()+3)*(radio*2);
 	}
 
-	private String obtenerVertices (VerticeArbolBinario<Integer> vertice, int radio, int padding, int i, int x, int y) {
+
+	private String obtenerVertices (VerticeArbolBinario<Integer> vertice, int radio, int i, int x, int y, String arbol_a) {
 		String arbol = "", color = "white", colorLetra = "black";
 		i /= 2;
 		// Recusivamente obteniendo los sub-arboles izquierdo y derecho.
 		if (vertice.hayIzquierdo()) {
 			arbol += utils.linea(x, y, x-i, y+radio*2);
-			arbol += obtenerVertices(vertice.getIzquierdo(), radio, padding, i, x-i, y+radio*2);
+			arbol += obtenerVertices(vertice.getIzquierdo(), radio, i, x-i, y+radio*2, arbol_a);
 		}
 		if (vertice.hayDerecho()) {
 			arbol += utils.linea(x, y, x+i, y+radio*2);
-			arbol += obtenerVertices(vertice.getDerecho(), radio, padding, i, x+i, y+radio*2);
+			arbol += obtenerVertices(vertice.getDerecho(), radio, i, x+i, y+radio*2, arbol_a);
 		}
 
 		// Obteniendo si necesita color.
@@ -162,7 +256,49 @@ public class EstructurasDatosSVG {
 			colorLetra = "white";
 		}
 
-		arbol += utils.circuloConNumero(vertice.get(), x, y, padding, radio, color, colorLetra);
+		arbol += utils.circuloConNumero(vertice.get(), x, y, radio, color, colorLetra);
+		if (arbol_a.equals("AVL")) {
+			arbol += utils.texto(vertice.toString().split(" ")[1], x+radio, y-(radio/2), "text-anchor='middle'");
+		}
 		return arbol;
+	}
+
+
+	private String obtenerVertices (Grafica<Integer> g, double radioG, int radio, double x, double y)  {
+		String vertices = "", aristas = "", color = "white", colorLetra = "black";
+		double angulo = Math.toRadians(360 / g.getElementos());
+		double anguloi = 0, xi, yi;
+		int i = 0;
+		VerticeCoordenada coordenadai;
+		VerticeGrafica<Integer> vi = null;
+		VerticeCoordenada[] coordenadas = new VerticeCoordenada[g.getElementos()];
+		Arreglos arr = new Arreglos();
+
+		// Obteniendo Vertices y asignarles una coordenada.
+		for (int v: g) {
+			xi = radioG*Math.cos(anguloi);
+			yi = radioG*Math.sin(anguloi);
+			vertices += utils.circuloConNumero(v, x+xi, y+yi, radio, color, colorLetra);
+
+			vi = g.vertice(v);
+			coordenadai = new VerticeCoordenada(vi, x+xi, y+yi);
+			coordenadas[i] = coordenadai;
+
+			anguloi += angulo;
+			i += 1;
+		}
+
+
+		// Obteniendo aristas.
+		arr.quickSort(coordenadas);
+		for (VerticeCoordenada v: coordenadas) {
+			for (VerticeGrafica<Integer> vecino: v.vertice.vecinos()) {
+				coordenadai = new VerticeCoordenada(vecino, 0, 0);
+				coordenadai = coordenadas[arr.busquedaBinaria(coordenadas, coordenadai)];
+				aristas += utils.linea(v.x, v.y, coordenadai.x, coordenadai.y);
+			}
+		}
+
+		return aristas + vertices;
 	}
 }
