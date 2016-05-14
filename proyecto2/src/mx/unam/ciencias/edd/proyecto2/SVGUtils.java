@@ -1,5 +1,9 @@
 package mx.unam.ciencias.edd.proyecto2;
 
+
+/**
+ * Clase para crear elementos en SVG.
+ */
 public class SVGUtils {
 
 	/* Utils */
